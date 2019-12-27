@@ -1,21 +1,18 @@
 {
-  "name": "monaco-languages",
-  "version": "1.9.0",
-  "description": "Bundle of many languages for the Monaco Editor.",
+  "name": "@paul80nd/monaco-languages",
+  "version": "1.0.0",
+  "description": "Bundle of Relay Computer Assembly langauges for the Monaco Editor.",
   "scripts": {
     "compile": "mrmdir ./release && tsc -p ./src/tsconfig.json && tsc -p ./src/tsconfig.esm.json",
     "watch": "tsc -p ./src --watch",
     "test": "mocha",
     "prepublishOnly": "npm run compile && node ./scripts/bundle"
   },
-  "author": "Microsoft Corporation",
+  "author": "Paul Law",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Microsoft/monaco-languages"
-  },
-  "bugs": {
-    "url": "https://github.com/Microsoft/monaco-languages/issues"
+    "url": "https://github.com/paul80nd/monaco-languages"
   },
   "devDependencies": {
     "glob": "^7.1.6",
