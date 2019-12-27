@@ -1,27 +1,30 @@
 {
-  "name": "@paul80nd/monaco-languages",
-  "version": "1.0.0",
-  "description": "Bundle of Relay Computer Assembly langauges for the Monaco Editor.",
-  "scripts": {
-    "compile": "mrmdir ./release && tsc -p ./src/tsconfig.json && tsc -p ./src/tsconfig.esm.json",
-    "watch": "tsc -p ./src --watch",
-    "test": "mocha",
-    "prepublishOnly": "npm run compile && node ./scripts/bundle"
-  },
-  "author": "Paul Law",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/paul80nd/monaco-languages"
-  },
-  "devDependencies": {
-    "glob": "^7.1.6",
-    "jsdom": "^15.2.1",
-    "mocha": "^6.2.2",
-    "monaco-editor-core": "0.19.0",
-    "monaco-plugin-helpers": "^1.0.2",
-    "requirejs": "^2.3.6",
-    "terser": "^4.4.3",
-    "typescript": "3.7.3"
-  }
+	"name": "@paul80nd/monaco-languages",
+	"version": "1.0.0",
+	"description": "Bundle of Relay Computer Assembly langauges for the Monaco Editor.",
+	"scripts": {
+		"compile": "mrmdir ./release && tsc -p ./src/tsconfig.json && tsc -p ./src/tsconfig.esm.json",
+		"watch": "tsc -p ./src --watch",
+		"test": "mocha",
+		"prepublishOnly": "npm run compile && node ./scripts/bundle"
+	},
+	"author": "Paul Law",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/paul80nd/monaco-languages"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/"
+	},
+	"devDependencies": {
+		"glob": "^7.1.6",
+		"jsdom": "^15.2.1",
+		"mocha": "^6.2.2",
+		"monaco-editor-core": "0.19.0",
+		"monaco-plugin-helpers": "^1.0.2",
+		"requirejs": "^2.3.6",
+		"terser": "^4.4.3",
+		"typescript": "3.7.3"
+	}
 }
