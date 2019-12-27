@@ -7,8 +7,8 @@
 import { registerLanguage } from '../_.contribution';
 
 registerLanguage({
-	id: 'csharp',
-	extensions: ['.cs', '.csx', '.cake'],
-	aliases: ['C#', 'csharp'],
-	loader: () => import('./csharp')
+	id: 'rcasm',
+	extensions: ['.rcasm'],
+	aliases: ['RCASM'],
+	loader: () => import('./rcasm')
 });

@@ -4,6 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 'use strict';
 
-import './csharp/csharp.contribution';
+import './rcasm/rcasm.contribution';
 import './mips/mips.contribution';
 
