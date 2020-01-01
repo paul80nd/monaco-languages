@@ -1,6 +1,6 @@
 {
 	"name": "@paul80nd/monaco-languages",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"description": "Bundle of Relay Computer Assembly langauges for the Monaco Editor.",
 	"scripts": {
 		"compile": "mrmdir ./release && tsc -p ./src/tsconfig.json && tsc -p ./src/tsconfig.esm.json",

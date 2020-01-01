@@ -17,8 +17,9 @@ export const language = <ILanguage>{
     tokenPostfix: '.rcasm',
 
     keywords: [
-        'add', 'and', 'clr', 'inc', 'mov', 'not', 'ldi', 'orr', 'eor', 'rol',
-        'bne', 'beq', 'blt', 'ble', 'bmi', 'bcs', 'jmp', 'jsr', 'rts'
+		'add', 'inc', 'ixy', 'and', 'orr', 'eor', 'not', 'rol', 'cmp',
+		'mov', 'clr', 'ldi', 'lds', 'ldr', 'str', 'hlt', 'hlr', 'opc',
+        'jmp', 'jsr', 'rts', 'bne', 'beq', 'bcs', 'bmi', 'blt', 'ble'
     ],
 
     registers: [
