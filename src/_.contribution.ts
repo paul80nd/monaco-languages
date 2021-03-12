@@ -2,25 +2,22 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-'use strict';
 
-// Allow for running under nodejs/requirejs in tests
-const _monaco: typeof monaco = (typeof monaco === 'undefined' ? (<any>self).monaco : monaco);
+import { languages } from './fillers/monaco-editor-core';
 
-interface ILang extends monaco.languages.ILanguageExtensionPoint {
+interface ILang extends languages.ILanguageExtensionPoint {
 	loader: () => Promise<ILangImpl>;
 }
 
 interface ILangImpl {
-	conf: monaco.languages.LanguageConfiguration;
-	language: monaco.languages.IMonarchLanguage;
+	conf: languages.LanguageConfiguration;
+	language: languages.IMonarchLanguage;
 }
 
-const languageDefinitions: { [languageId: string]: ILang; } = {};
-const lazyLanguageLoaders: { [languageId: string]: LazyLanguageLoader; } = {};
+const languageDefinitions: { [languageId: string]: ILang } = {};
+const lazyLanguageLoaders: { [languageId: string]: LazyLanguageLoader } = {};
 
 class LazyLanguageLoader {
-
 	public static getOrCreate(languageId: string): LazyLanguageLoader {
 		if (!lazyLanguageLoaders[languageId]) {
 			lazyLanguageLoaders[languageId] = new LazyLanguageLoader(languageId);
@@ -50,7 +47,10 @@ class LazyLanguageLoader {
 	public load(): Promise<ILangImpl> {
 		if (!this._loadingTriggered) {
 			this._loadingTriggered = true;
-			languageDefinitions[this._languageId].loader().then(mod => this._lazyLoadPromiseResolve(mod), err => this._lazyLoadPromiseReject(err));
+			languageDefinitions[this._languageId].loader().then(
+				(mod) => this._lazyLoadPromiseResolve(mod),
+				(err) => this._lazyLoadPromiseReject(err)
+			);
 		}
 		return this._lazyLoadPromise;
 	}
@@ -64,13 +64,16 @@ export function registerLanguage(def: ILang): void {
 	const languageId = def.id;
 
 	languageDefinitions[languageId] = def;
-	_monaco.languages.register(def);
+	languages.register(def);
 
 	const lazyLanguageLoader = LazyLanguageLoader.getOrCreate(languageId);
-	_monaco.languages.setMonarchTokensProvider(languageId, lazyLanguageLoader.whenLoaded().then(mod => mod.language));
-	_monaco.languages.onLanguage(languageId, () => {
-		lazyLanguageLoader.load().then(mod => {
-			_monaco.languages.setLanguageConfiguration(languageId, mod.conf);
+	languages.setMonarchTokensProvider(
+		languageId,
+		lazyLanguageLoader.whenLoaded().then((mod) => mod.language)
+	);
+	languages.onLanguage(languageId, () => {
+		lazyLanguageLoader.load().then((mod) => {
+			languages.setLanguageConfiguration(languageId, mod.conf);
 		});
 	});
 }

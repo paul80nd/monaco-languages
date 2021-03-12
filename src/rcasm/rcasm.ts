@@ -1,67 +1,86 @@
-'use strict';
-
 // Inspired by: https://github.com/microsoft/monaco-languages/blob/master/src/mips/mips.ts
 
-import IRichLanguageConfiguration = monaco.languages.LanguageConfiguration;
-import ILanguage = monaco.languages.IMonarchLanguage;
+import type { languages } from '../fillers/monaco-editor-core';
 
-export const conf: IRichLanguageConfiguration = {
+export const conf: languages.LanguageConfiguration = {
 	comments: {
 		lineComment: ';'
 	}
 };
 
-export const language = <ILanguage>{
-    defaultToken: '',
-    ignoreCase: false,
-    tokenPostfix: '.rcasm',
+export const language = <languages.IMonarchLanguage>{
+	defaultToken: '',
+	ignoreCase: false,
+	tokenPostfix: '.rcasm',
 
-    keywords: [
-		'add', 'inc', 'ixy', 'and', 'orr', 'eor', 'not', 'rol', 'cmp',
-		'mov', 'clr', 'ldi', 'lds', 'ldr', 'str', 'hlt', 'hlr', 'opc',
-        'jmp', 'jsr', 'rts', 'bne', 'beq', 'bcs', 'bmi', 'blt', 'ble'
-    ],
+	keywords: [
+		'add',
+		'inc',
+		'ixy',
+		'and',
+		'orr',
+		'eor',
+		'not',
+		'rol',
+		'cmp',
+		'mov',
+		'clr',
+		'ldi',
+		'lds',
+		'ldr',
+		'str',
+		'hlt',
+		'hlr',
+		'opc',
+		'jmp',
+		'jsr',
+		'rts',
+		'bne',
+		'beq',
+		'bcs',
+		'bmi',
+		'blt',
+		'ble'
+	],
 
-    registers: [
-        'a', 'b', 'c', 'd', 'j', 'j1', 'j2', 'm', 'm1', 'm2', 'x', 'y', 'xy'
-    ],
+	registers: ['a', 'b', 'c', 'd', 'j', 'j1', 'j2', 'm', 'm1', 'm2', 'x', 'y', 'xy'],
 
-    symbols: /[\.,\:]+/,
+	symbols: /[\.,\:]+/,
 
-    // The main tokenizer for our languages
-    tokenizer: {
-        root: [
+	// The main tokenizer for our languages
+	tokenizer: {
+		root: [
+			// identifiers and keywords
+			[
+				/[.a-zA-Z_]\w*/,
+				{
+					cases: {
+						this: 'variable.predefined',
+						'@keywords': { token: 'keyword.$0' },
+						'@registers': 'type.register',
+						'@default': ''
+					}
+				}
+			],
 
-            // identifiers and keywords
-            [/[.a-zA-Z_]\w*/, {
-                cases: {
-                    'this': 'variable.predefined',
-                    '@keywords': { token: 'keyword.$0' },
-                    '@registers': 'type.register',
-                    '@default': ''
-                }
-            }],
+			// whitespace
+			[/[ \t\r\n]+/, ''],
 
-            // whitespace
-            [/[ \t\r\n]+/, ''],
+			// Comments
+			[/;.*$/, 'comment'],
 
-            // Comments
-            [/;.*$/, 'comment'],
+			// delimiters
+			[/@symbols/, 'delimiter'],
 
-            // delimiters
-            [/@symbols/, 'delimiter'],
+			// numbers
+			[/0[xX][0-9a-fA-F]+/, 'number.hex'],
+			[/0[bB][0-1]+/, 'number.binary'],
+			[/[+-]?\d+/, 'number']
 
-            // numbers
-            [/0[xX][0-9a-fA-F]+/, 'number.hex'],
-            [/0[bB][0-1]+/, 'number.binary'],
-            [/[+-]?\d+/, 'number'],
-
-            // Identifiers and keywords
-            //      [/^[a-z]+:/, 'identifier'],
-            //     [/[a-z]{3}/, {cases: {'@keywords': 'keyword'}}],
-            //   [/[a-d]/, {cases: {'@types': 'type'}}],
-
-
-        ]
-    }
-}
+			// Identifiers and keywords
+			//      [/^[a-z]+:/, 'identifier'],
+			//     [/[a-z]{3}/, {cases: {'@keywords': 'keyword'}}],
+			//   [/[a-d]/, {cases: {'@types': 'type'}}],
+		]
+	}
+};

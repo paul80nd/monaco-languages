@@ -1,13 +1,14 @@
 {
 	"name": "@paul80nd/monaco-languages",
-	"version": "1.10.0",
+	"version": "2.3.0",
 	"description": "Bundle of Relay Computer Assembly langauges for the Monaco Editor.",
 	"scripts": {
-		"compile": "mrmdir ./release && tsc -p ./src/tsconfig.json && tsc -p ./src/tsconfig.esm.json",
+		"compile": "mrmdir ./out && tsc -p ./src/tsconfig.json && tsc -p ./src/tsconfig.esm.json",
 		"watch": "tsc -p ./src --watch",
 		"watch-esm": "tsc -p ./src/tsconfig.esm.json --watch",
 		"test": "tape -r ./test/all.js",
-		"prepublishOnly": "npm run compile && node ./scripts/bundle"
+		"prepublishOnly": "mrmdir ./release && npm run compile && node ./scripts/release.js && node ./scripts/bundle",
+		"prettier": "prettier --write ."
 	},
 	"author": "Paul Law",
 	"license": "MIT",
@@ -19,14 +20,22 @@
 		"registry": "https://npm.pkg.github.com/"
 	},
 	"devDependencies": {
-		"@types/tape": "^4.2.34",
+		"@types/tape": "^4.13.0",
 		"glob": "^7.1.6",
-		"jsdom": "^16.2.1",
-		"monaco-editor-core": "0.20.0",
-		"monaco-plugin-helpers": "^1.0.2",
+		"husky": "^4.3.8",
+		"jsdom": "^16.4.0",
+		"monaco-editor-core": "0.22.0",
+		"monaco-plugin-helpers": "^1.0.3",
+		"prettier": "^2.2.1",
+		"pretty-quick": "^3.1.0",
 		"requirejs": "^2.3.6",
-		"tape": "^4.13.2",
-		"terser": "^4.6.6",
-		"typescript": "3.7.5"
+		"tape": "^5.1.1",
+		"terser": "^5.5.1",
+		"typescript": "4.1.3"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "pretty-quick --staged"
+		}
 	}
 }
